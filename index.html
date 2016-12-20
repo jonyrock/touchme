@@ -21,6 +21,7 @@
 
 			var CANVAS_WIDTH  = 200;
 			var CANVAS_HEIGHT = 250;
+      var IMAGE_SRC = 'https://s3.amazonaws.com/bitlaterbucket/turk_segmentation/m-031-01.jpg';
 
 			//global variables for the page
 			var img;
@@ -61,7 +62,7 @@
 			function init_canvas(){
 				img = new Image();
 
-				img.src = 'https://s3.amazonaws.com/bitlaterbucket/turk_segmentation/m-031-01.jpg';
+				img.src = IMAGE_SRC;
 				canvas_fix = document.getElementById("segmentation_canvas");
 				ctx = canvas_fix.getContext("2d");
 				canvas_fix.onmousemove = mousemove_canvas;
@@ -257,7 +258,7 @@
 			}
 			// what to submit to AMT server
 			function get_results_string(){
-				var result = category_name + "," + image_name;
+				var result = IMAGE_SRC + "::::"
 				for(var i=0;i<numpts;i++){
 					result +=  "," + x[i] + "," + y[i];
 				}
@@ -271,6 +272,8 @@
 				}
 
 				var results = get_results_string();
+        alert(results);
+        return;
 				document.getElementById('segpoly').value = results;
 				document.forms["mturk_form"].submit();
 				//alert(results);
@@ -293,7 +296,11 @@
 			</td></tr>
 		</table>
 	</div>
-	<div style="text-align:center;" class="xlink"><canvas id="segmentation_canvas" width=450 height=450></canvas></div>
+	<div style="text-align:center;" class="xlink">
+    <script type="text/javascript">
+      document.write('<canvas id="segmentation_canvas" width=' + CANVAS_WIDTH + ' height='+ CANVAS_HEIGHT +'></canvas>')
+    </script>
+  </div>
 
 	<script type="text/javascript">
 		document.getElementById('assignmentId').value = gup('assignmentId');
