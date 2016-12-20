@@ -20,8 +20,11 @@
 		<script type="text/javascript">
 
 			var CANVAS_WIDTH  = 200;
+      //var CANVAS_WIDTH  = ${image_width};
 			var CANVAS_HEIGHT = 250;
+      //var CANVAS_HEIGHT  = ${image_hight};
       var IMAGE_SRC = 'https://s3.amazonaws.com/bitlaterbucket/turk_segmentation/m-031-01.jpg';
+      //var IMAGE_SRC = '${image_url}';
 
 			//global variables for the page
 			var img;
@@ -287,7 +290,7 @@
 	<div align=center>
 		<table width=420>
 			<tr align=center><td>
-				<form id="mturk_form" method="POST" action="http://www.mturk.com/mturk/externalSubmit">
+				<form id="mturk_form" method="POST">
 					<input type="hidden" id="assignmentId" name="assignmentId" value="">
 					<input type="hidden" id="segpoly" name="results" value="">
 					<br>
