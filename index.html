@@ -240,16 +240,7 @@
 					draw_canvas();
 				}
 			}
-			//keys to reset the annotation
-			function keydown(event) {
-				var key = String.fromCharCode(event.keyCode || event.which);
-				switch (key) {
-						case "R":
-						reset_annotation();
-						break;
-				}
-				draw_canvas();
-			}
+
 			/// functions related to AMT task
 			function gup(name){
 				var regexS = "[\\?&]"+name+"=([^&#]*)";
@@ -271,9 +262,9 @@
 			}
 			// what to submit to AMT server
 			function get_results_string(){
-				var result = IMAGE_SRC + "::::"
-				for(var i=0;i<numpts;i++){
-					result +=  "," + x[i] + "," + y[i];
+				var result = IMAGE_SRC + "::"
+				for(var i=0;i<numpts;i++) {
+					result +=  " " + x[i] + "," + y[i];
 				}
 				return result;
 			}
@@ -288,6 +279,16 @@
   				}
           alert("Please close the polygon before submitting.");
           event.preventDefault();
+        });
+
+        $(window).keypress(function( event ) {
+          // if ( event.which == 13 ) {
+          //    event.preventDefault();
+          // }
+          if(event.which === 114) {
+            reset_annotation();
+            draw_canvas();
+          }
         });
 
       })
