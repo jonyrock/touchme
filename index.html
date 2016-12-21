@@ -11,6 +11,112 @@
 <!-- #################  -->
 <!-- cut for form here  -->
 <!-- #################  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+  var CANVAS_WIDTH  = 200;
+  var CANVAS_HEIGHT = 250;
+  var IMAGE_SRC = 'https://s3.amazonaws.com/bitlaterbucket/turk_segmentation/m-031-01.jpg';
+  var TUTORIAL_SRC = 'https://s3.amazonaws.com/bitlaterbucket/turk_segmentation/tutorial1.gif';
+  //var IMAGE_SRC = '${image_url}';
+</script>
+
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet" /><!-- Open internal style sheet -->
+
+<div class="row">
+<div class="col-xs-12 col-md-12">
+
+<div class="panel panel-primary">
+  <!-- WARNING: the ids "collapseTrigger" and "instructionBody" are being used to enable expand/collapse feature -->
+  <a class="panel-heading" href="javascript:void(0);" id="collapseTrigger">
+    <strong>Segmentation Instructions</strong>
+    <span class="collapse-text">(Click to expand)</span>
+  </a>
+<div class="panel-body" id="instructionBody" style="display:none">
+
+<!-- Detailed instructions for the Worker-->
+
+<table>
+  <tr>
+    <td><img id="tutorialImg" height="250" width="200"></td>
+    <td>
+      <h2> Task Guidelines </h2>
+      <p> Draw the outer boundary of the person / people. </p>
+      <h2> Interface instructions </h2>
+      <ul>
+        <li>Remember to accept the hit before you proceed!
+        </li><li>Start by clicking somewhere and extend the polygon by clicking on the next point.
+        </li><li>You must close the polygon by clicking on the first point. The first point becomes larger when you come close.
+        </li><li>Once you close the polygon, you can move the control points to adjust the boundary.
+        </li><li>Press <em>r</em> to reset the annotation at any point.
+        </li><li>Press the 'submit' at the bottom of the page to submit your results.</li>
+      </ul>
+    </td>
+
+  </tr>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<style type="text/css">
+
+  #collapseTrigger{
+    color:#fff;
+    display: block;
+    text-decoration: none;
+  }
+  #submitButton{
+    white-space: normal;
+  }
+  #instructionBody table{
+    font-size: 14px;
+  }
+  #instructionBody table caption{
+    text-align: left;
+    padding: 0 0 5px 0;
+  }
+  #CategoryInputs{
+    display: block;
+    margin-top: 10px;
+  }
+  .content{
+    margin-bottom: 15px;
+  }
+  .radio:first-of-type{
+    margin-top: -5px;
+  }
+</style>
+<!-- Close internal style sheet --><!-- External JS references -->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Open internal javascript --><script>
+    $(document).ready(function() {
+      // Instructions expand/collapse
+      var content = $('#instructionBody');
+      var trigger = $('#collapseTrigger');
+      content.hide();
+      $('.collapse-text').text('(Click to expand)');
+      trigger.click(function(){
+        content.toggle();
+        var isVisible = content.is(':visible');
+        if(isVisible){
+          $('.collapse-text').text('(Click to collapse)');
+          $('#tutorialImg').attr('src', TUTORIAL_SRC);
+        }else{
+          $('.collapse-text').text('(Click to expand)');
+        }
+      });
+      // end expand/collapse
+
+    });
+  </script><!-- Close internal javascript -->
+
+<!-- End instructions --><!-- Categorization Layout -->
+
+
+
 
     <input type="hidden" value="" name="segpoly" id="segpoly">
 
@@ -20,21 +126,15 @@
       #submitButton {
         display: block;
         width: 120px;
-        height: 50px;
+        height: 40px;
         margin: auto;
+        margin-top: 30px;
       }
 		</style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 		<script type="text/javascript">
-
-			var CANVAS_WIDTH  = 200;
-
-			var CANVAS_HEIGHT = 250;
-
-      var IMAGE_SRC = 'https://s3.amazonaws.com/bitlaterbucket/turk_segmentation/m-031-01.jpg';
-      //var IMAGE_SRC = '${image_url}';
 
 			//global variables for the page
 			var img;
@@ -296,7 +396,7 @@
 	</script>
 	</head>
 	<body>
-	<div align=center ><h3 style="color:green"> Draw the outline of the person within the box</h3></div>
+	<div align=center ><h3> Draw the outline of the person within the box</h3></div>
 	<div align=center style="color:black"> (<em>press <b>r</b> to reset)</em> </div> <br/>
 
 	<div style="text-align:center;" class="xlink">
