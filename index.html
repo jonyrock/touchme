@@ -3,9 +3,26 @@
 
 	<title>AMT : Image Segmentation</title>
 	<head>
+
+<form name="mturk_form" method="post" id="mturk_form" action="https://www.mturk.com/mturk/externalSubmit">
+  <input type="hidden" value="" name="assignmentId" id="assignmentId">
+
+
+<!-- #################  -->
+<!-- cut for form here  -->
+<!-- #################  -->
+
+    <input type="hidden" value="" name="segpoly" id="segpoly">
+
 		<style type="text/css">
   		.xlink {cursor:default}
   		.hlink{cursor:help}
+      #submitButton {
+        display: block;
+        width: 120px;
+        height: 50px;
+        margin: auto;
+      }
 		</style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -260,47 +277,41 @@
 				}
 				return result;
 			}
-			// grab the results and submit to the server
-			function submitResults(){
-				if(!polygon_is_closed){
-					alert("Please close the polygon before submitting.");
-					return;
-				}
 
-				var results = get_results_string();
-        alert(results);
-        return;
-				document.getElementById('segpoly').value = results;
-				document.forms["mturk_form"].submit();
-				//alert(results);
-			}
+      $(function() {
+        init_canvas();
+        $('#mturk_form').submit(function(event) {
+          if(polygon_is_closed) {
+            var results = get_results_string();
+            $('#segpoly').val(results);
+  					return;
+  				}
+          alert("Please close the polygon before submitting.");
+          event.preventDefault();
+        });
 
-      $(init_canvas);
+      })
 
 	</script>
 	</head>
 	<body>
 	<div align=center ><h3 style="color:green"> Draw the outline of the person within the box</h3></div>
-	<div align=center style="color:black"> Read  <a href=tutorial/person/index.html target="_blank" class="hlink"> instructions</a> before you start (<em>press <b>r</b> to reset)</em> </div>
-	<div align=center>
-		<table width=420>
-			<tr align=center><td>
-				<form id="mturk_form" method="POST">
-					<input type="hidden" id="assignmentId" name="assignmentId" value="">
-					<input type="hidden" id="segpoly" name="results" value="">
-					<br>
-					<input id="submitButton" type="button" name="Submit Results" value="Submit Results" onClick="submitResults()">
-				</form>
-			</td></tr>
-		</table>
-	</div>
+	<div align=center style="color:black"> (<em>press <b>r</b> to reset)</em> </div> <br/>
+
 	<div style="text-align:center;" class="xlink">
     <script type="text/javascript">
       document.write('<canvas id="segmentation_canvas" width=' + CANVAS_WIDTH + ' height='+ CANVAS_HEIGHT +'></canvas>')
     </script>
   </div>
 
+<!-- #################  -->
+<!--   stop cut here    -->
+<!-- #################  -->
 
+
+<p class="text-center"><input type="submit" id="submitButton" class="btn btn-primary" value="Submit"></p>
+
+</form>
 
 
 	</body>
